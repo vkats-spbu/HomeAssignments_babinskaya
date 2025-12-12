@@ -1,7 +1,7 @@
 /*
 * Arina Babinskaya
 * st139880@student.spbu.ru
-* Assignment3
+* Assignment4
 */
 
 #ifndef DECEPTICON_H
@@ -11,13 +11,24 @@
 
 class Decepticon : public Transformer {
 	public:
-		Decepticon(const std::string& name, int strength, int speed,
-                bool ammo, const Weapon& weapon, Vehicle* vehicle,
-                bool dangerous, int kills); //constructor
+		//constructors
+		Decepticon();
+		Decepticon(const std::string& name);
+		Decepticon(const std::string& name, int strength);
+		Decepticon(const std::string& name, int strength, int speed);
+		Decepticon(const std::string& name, int strength, int speed, bool ammo);
+		Decepticon(const std::string& name, int strength, int speed, bool ammo, const Weapon& weapon,
+                Vehicle* vehicle);
+		Decepticon(const std::string& name, int strength, int speed, bool ammo, const Weapon& weapon,
+                Vehicle* vehicle, bool dangerous);
+		Decepticon(const std::string& name, int strength, int speed, bool ammo, const Weapon& weapon,
+		Vehicle* vehicle, bool dangerous, int kills);
+
+		friend std::ostream& operator<<(std::ostream& os, const Decepticon& d);
 
 		//getters
-		bool GetDangerous();
-		int GetKills();
+		bool GetDangerous() const;
+		int GetKills() const;
 
 		//setters
 		void SetDangerous(bool dangerous);
@@ -25,6 +36,9 @@ class Decepticon : public Transformer {
 
 		//class method
 		std::string Destroy();
+		std::string Transform() override;
+		std::string Speak() override;
+		std::string Fire() override;
 
 	private:
 		bool dangerous_;

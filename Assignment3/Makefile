@@ -1,31 +1,26 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -I. -fPIC
-ARFLAGS = rcs
-LIBS = -lgtest -lgtest_main -lpthread
+CXXFLAGS = -std=c++17 -Wall -Werror -Wpedantic -I./ -pthread
+LIBS = -lgtest -lgtest_main
 
 PROJECT = test_check
-LIBPROJECT = lib$(PROJECT).a
-TESTPROJECT = test-$(PROJECT)
 
-SRCS = ClassTransformer.cpp ClassAutobot.cpp ClassDecepticon.cpp ClassMinicon.cpp ClassWeapon.cpp ClassVehicle.cpp
-TEST_SRCS = test_transformer.cpp test_autobot.cpp test_decepticon.cpp test_minicon.cpp
+SRCS = main.cpp Transformer.cpp Autobot.cpp Decepticon.cpp Minicon.cpp Weapon.cpp Vehicle.cpp
+TEST_SRCS = test_transformer.cpp test_autobot.cpp test_decepticon.cpp test_minicon.cpp Transformer.cpp Autobot.cpp Decepticon.cpp Minicon.cpp Weapon.cpp Vehicle.cpp
+HEADERS = Transformer.h Autobot.h Decepticon.h Minicon.h Weapon.h Vehicle.h
 
 OBJS = $(SRCS:.cpp=.o)
 TEST_OBJS = $(TEST_SRCS:.cpp=.o)
 
-all: $(TESTPROJECT)
+example: $(OBJS)
+	$(CXX) $(CXXFLAGS) -o example $(OBJS)
 
-$(LIBPROJECT): $(OBJS)
-	$(AR) $(ARFLAGS) $@ $^
+test: $(TEST_OBJS)
+	$(CXX) $(CXXFLAGS) -o test_check $(TEST_OBJS) $(LIBS)
 
-$(TESTPROJECT): $(TEST_OBJS) $(LIBPROJECT)
-	$(CXX) -o $@ $^ $(CXXFLAGS) -L. -l:$(LIBPROJECT) $(LIBS)
-
-test: $(TESTPROJECT)
-	./$(TESTPROJECT)
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o $(PROJECT) $(TESTPROJECT) $(LIBPROJECT)
+	rm -f *.o $(TEST_OBJS) $(OBJS) test_check example
 
-.PHONY: all clean test
-
+.PHONY: example clean test

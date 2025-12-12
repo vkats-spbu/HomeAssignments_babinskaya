@@ -1,7 +1,7 @@
 /*
 * Arina Babinskaya
 * st139880@student.spbu.ru
-* Assignment3
+* Assignment4
 */
 
 #ifndef MINICON_H
@@ -11,13 +11,24 @@
 
 class Minicon : public Transformer{
 	public:
-		Minicon(const std::string& name, int strength, int speed,
-                bool ammo, const Weapon& weapon, Vehicle* vehicle,
-                int size, int agility); //constructor
+		//constructors
+		Minicon();
+		Minicon(const std::string& name);
+		Minicon(const std::string& name, int strength);
+		Minicon(const std::string& name, int strength, int speed);
+		Minicon(const std::string& name, int strength, int speed, bool ammo);
+		Minicon(const std::string& name, int strength, int speed, bool ammo,
+                const Weapon& weapon, Vehicle* vehicle);
+		Minicon(const std::string& name, int strength, int speed, bool ammo,
+                const Weapon& weapon, Vehicle* vehicle, int size);
+		Minicon(const std::string& name, int strength, int speed, bool ammo,
+                const Weapon& weapon, Vehicle* vehicle, int size, int agility);
+
+		friend std::ostream& operator<<(std::ostream& os, const Minicon& m); //output
 
 		//getter
-		int GetSize();
-		int GetAgility();
+		int GetSize() const;
+		int GetAgility() const;
 
 		//setter
 		void SetSize(int size);
@@ -25,6 +36,9 @@ class Minicon : public Transformer{
 
 		//class method
 		std::string HelpAutobot();
+		std::string Transform() override;
+		std::string Speak() override;
+		std::string Fire() override;
 
 	private:
 		int size_;

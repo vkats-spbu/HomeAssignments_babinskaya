@@ -1,24 +1,23 @@
 /*
 * Arina Babinskaya
 * st139880@student.spbu.ru
-* Assignment3
+* Assignment4
 */
 
 #include "Vehicle.h"
 
 //constructor
-Vehicle::Vehicle(const std::string& type, const std::string& color):
-		type_(type), color_(color) {};
+Vehicle::Vehicle(const std::string& type, const std::string& color): type_(type), color_(color) {};
 
 //destructor
 Vehicle::~Vehicle() {};
 
 //getters
-std::string Vehicle::GetType() {
+std::string Vehicle::GetType() const {
 	return type_;
 }
 
-std::string Vehicle::GetColor() {
+std::string Vehicle::GetColor() const {
 	return color_;
 }
 
@@ -29,4 +28,9 @@ void Vehicle::SetType(const std::string& type) {
 
 void Vehicle::SetColor(const std::string& color) {
         color_ = color;
+}
+
+std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle) {
+	 os << "Vehicle: " << "type: " << vehicle.type_ << ", color: " << vehicle.color_;
+	return os;
 }
